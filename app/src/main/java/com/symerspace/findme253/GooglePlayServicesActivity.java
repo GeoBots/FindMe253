@@ -20,7 +20,7 @@ public class GooglePlayServicesActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = "GooglePlayServicesActivity";
+    private static final String TAG = "My Activity";
 
     private static final String KEY_IN_RESOLUTION = "is_in_resolution";
 
