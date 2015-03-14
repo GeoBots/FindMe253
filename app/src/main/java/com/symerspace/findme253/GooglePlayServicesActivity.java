@@ -16,6 +16,10 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
 
+import com.parse.Parse;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
+
 public class GooglePlayServicesActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -49,7 +53,20 @@ public class GooglePlayServicesActivity extends Activity implements
         if (savedInstanceState != null) {
             mIsInResolution = savedInstanceState.getBoolean(KEY_IN_RESOLUTION, false);
         }
+
+        Parse.initialize(this, "82zJdrj5lKCBWJyi7f2d2xuUaKWqQ48OcqFXgTq1", "ea0LjEDNQgu0nBhjQrkeS0NSfgtRRJzScbnqw4F9");
+        ParsePush.subscribeInBackground("", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+                } else {
+                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                }
+            }
+        });
     }
+
 
     /**
      * Called when the Activity is made visible.
