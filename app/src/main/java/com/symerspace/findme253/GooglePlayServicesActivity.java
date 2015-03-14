@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,10 +16,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
-
-import com.parse.Parse;
-import com.parse.ParsePush;
-import com.parse.SaveCallback;
 
 
 public class GooglePlayServicesActivity extends Activity implements
@@ -187,4 +184,9 @@ public class GooglePlayServicesActivity extends Activity implements
             retryConnecting();
         }
     }
+
+    //TEST MONGO DB
+
+
+
 }
