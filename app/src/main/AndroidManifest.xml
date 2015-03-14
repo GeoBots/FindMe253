@@ -2,6 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.symerspace.findme253" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+        <!--
+          BEGIN PUSH PERMISSIONS!
+        -->
+
+            <!--
+               IMPORTANT: Change "com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE" in the lines below
+               to match your app's package name + ".permission.C2D_MESSAGE".
+            -->
+
+    <permission android:protectionLevel="signature"
+        android:name="com.symerspace.findme253.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.symerspace.findme253.pushnotifications.permission.C2D_MESSAGE" />
+
+        <!--
+          END PUSH PERMISSIONS!
+        -->
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -22,7 +48,7 @@
             android:value="@integer/google_play_services_version" />
 
                 <!--
-                  BEGIN PUSH SECTION!
+                  BEGIN PUSH REGISTER!
                 -->
 
         <service android:name="com.parse.PushService" />
@@ -53,7 +79,7 @@
         </receiver>
 
                 <!--
-                  END PUSH SECTION!
+                  END PUSH REGISTER!
                 -->
 
     </application>
