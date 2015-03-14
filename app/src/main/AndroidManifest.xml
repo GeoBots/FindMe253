@@ -39,9 +39,9 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <!--
-                  IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name.
+                  IMPORTANT: Use apps package name!!
                 -->
-                <category android:name="!!!__________!!!" />
+                <category android:name="com.symerspace.findme253" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
