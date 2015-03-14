@@ -82,6 +82,17 @@
                   END PUSH REGISTER!
                 -->
 
+            <!--
+              END PUSH REGISTER!
+            -->
+
+        <!-- replace @drawable/push_icon with your push icon identifier -->
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/push_icon"/>
+
+             <!--
+               END PUSH REGISTER!
+             -->
+
     </application>
 
 </manifest>
