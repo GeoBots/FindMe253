@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">FindMe253</string>
+    <string name="game_id">1</string>
+    <string name="latitude">Latitude: </string>
+    <string name="longitude">Longitude: </string>
+    <string name="no_location_detected">
+        No location detected. Make sure location is enabled on the device.</string>
+    <string name="share">Check</string>
+    <string name="action_settings">Settings</string>
+    <string name="colder">DARN. You are getting colder.</string>
+    <string name="warmer">GOOD! You are getting warmer.</string>
+    <string name="winner">YOU ARE THE WINNER !!!</string>
+
 </resources>
