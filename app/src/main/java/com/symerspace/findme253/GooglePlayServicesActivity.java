@@ -5,17 +5,30 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.WriteConcern;
+import com.mongodb.WriteResult;
+
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class GooglePlayServicesActivity extends Activity implements
@@ -37,6 +50,13 @@ public class GooglePlayServicesActivity extends Activity implements
     private GoogleApiClient mGoogleApiClient;
 
     /**
+     * Represents a geographical location.
+     */
+    protected Location mLastLocation;
+    protected TextView mLatitudeText;
+    protected TextView mLongitudeText;
+
+    /**
      * Determines if the client is in a resolution state, and
      * waiting for resolution intent to return.
      */
@@ -52,7 +72,7 @@ public class GooglePlayServicesActivity extends Activity implements
             mIsInResolution = savedInstanceState.getBoolean(KEY_IN_RESOLUTION, false);
         }
 
-        Parse.initialize(this, "82zJdrj5lKCBWJyi7f2d2xuUaKWqQ48OcqFXgTq1", "ea0LjEDNQgu0nBhjQrkeS0NSfgtRRJzScbnqw4F9");
+        /*Parse.initialize(this, "82zJdrj5lKCBWJyi7f2d2xuUaKWqQ48OcqFXgTq1", "ea0LjEDNQgu0nBhjQrkeS0NSfgtRRJzScbnqw4F9");
         ParsePush.subscribeInBackground("", new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -62,7 +82,7 @@ public class GooglePlayServicesActivity extends Activity implements
                     Log.e("com.parse.push", "failed to subscribe for push", e);
                 }
             }
-        });
+        });*/
     }
 
 
@@ -185,7 +205,53 @@ public class GooglePlayServicesActivity extends Activity implements
         }
     }
 
-    //TEST MONGO DB
+    //Begin Test MongoDB -- ksymer is working here
+
+    private class PostLocation extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                //create connection
+                String myUri = "mongodb://findme_service:abcde12345@ds043991.mongolab.com:43991/location";
+                String myColl = "FindMe253";
+                MongoClientURI uri = new MongoClientURI(myUri);
+                MongoClient mongoClient = new MongoClient(uri);
+                DB db = mongoClient.getDB(uri.getDatabase());
+                DBCollection coll = db.getCollection(myColl);
+
+                SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+                String now = time.format(new Date());
+
+                //insert lat/long
+                if (mLastLocation != null) {
+                    BasicDBObject lastLocation = new BasicDBObject();
+                    lastLocation.put("Latitude", String.valueOf(mLastLocation.getLatitude()));
+                    lastLocation.put("Longitude", String.valueOf(mLastLocation.getLongitude()));
+                    lastLocation.put("Time", String.valueOf(now));
+
+                    //coll.insert(lastLocation, WriteConcern.SAFE);
+
+                    WriteResult result = coll.insert(lastLocation, WriteConcern.SAFE);
+                    //Log.i(result.toString());
+
+                    mongoClient.close();
+
+                    return getString(R.string.submit_label); //"@string/submit_label"
+                }
+                else {
+                    mongoClient.close();
+                    return getString(R.string.submit_error); //"@string/submit_error"
+                }
+
+            } catch(UnknownHostException e) {
+                return getString(R.string.host_error); //"@string/host_error"
+            }
+        }
+    }
+
+
+    //END Test MongoDB
 
 
 
